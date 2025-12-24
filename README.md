@@ -1,157 +1,137 @@
-# 📚 PHP Bookstore - MVC Application
+# PHP Bookstore - MVC Application
 
-Ứng dụng quản lý cửa hàng sách trực tuyến với hệ thống kiểm duyệt nội dung, đánh giá sản phẩm, quản lý đơn hàng và tích hợp thanh toán VNPay.
-
----
-
-## 🚀 Tính Năng Chính
-
-### 👥 Hệ Thống Người Dùng
-
-- Đăng ký, đăng nhập, quên mật khẩu
-- Quản lý hồ sơ cá nhân
-- Hệ thống quyền & phân quyền (Admin, Moderator, User)
-
-### 📦 Quản Lý Sản Phẩm
-
-- Danh mục sản phẩm theo loại
-- Tìm kiếm và lọc sản phẩm
-- Chi tiết sản phẩm, hình ảnh, giá cả
-- Wishlist (danh sách yêu thích)
-
-### 🛒 Giỏ Hàng & Đơn Hàng
-
-- Thêm/xóa/cập nhật giỏ hàng
-- Lưu trữ giỏ hàng (session + database)
-- Quản lý đơn hàng
-- Lịch sử mua hàng
-
-### ⭐ Đánh Giá & Nhận Xét
-
-- Hệ thống đánh giá 5 sao
-- Viết nhận xét sản phẩm
-- **Hệ thống kiểm duyệt tự động** (xem bên dưới)
-
-### 🛡️ Kiểm Duyệt Nội Dung (Content Moderation)
-
-Hệ thống AI phát hiện spam, nội dung không phù hợp:
-
-- **Điểm spam** (0-100): phân loại mức độ
-- **Trạng thái**: Đợi duyệt, Phê duyệt, Từ chối, Spam
-- **Dashboard Admin**: Duyệt/từ chối nhận xét theo batch
-- **Khuyến nghị tự động**: Dựa trên nội dung
-- **Lý do từ chối**: Ghi chú chi tiết khi từ chối
-
-### 💳 Thanh Toán
-
-- Tích hợp VNPay
-- Xử lý phản hồi thanh toán
-- Quản lý trạng thái đơn hàng
-
-### 📰 Tin Tức & Chương Trình Khuyến Mãi
-
-- Danh sách tin tức
-- Quản lý sự kiện khuyến mãi
-- Sản phẩm quảng cáo nổi bật
-
-### 💬 Chatbox
-
-- Chat trực tuyến với khách hàng
-- Lưu lịch sử cuộc trò chuyện
-- Thông báo tin nhắn mới
+A comprehensive online bookstore management application. Provides features from product management, order processing, VNPay payment integration to an intelligent review moderation system.
 
 ---
 
-## 📁 Cấu Trúc Dự Án
+## Main Features
+
+### User System
+
+- User registration, login, password recovery
+- Personal profile management
+- User permissions and roles (Admin, Moderator, User)
+
+### Product Management
+
+- Product categories by type
+- Advanced search and filtering
+- Wishlist functionality
+
+### Shopping Cart & Orders
+
+- Add/remove/update cart items
+- Complete order management
+- Purchase history
+
+### Review & Rating System
+
+- 5-star product ratings
+- Detailed review writing
+- Automatic spam detection and moderation
+
+### Content Moderation (AI-Based)
+
+Automatic detection and classification of reviews:
+
+- Spam score analysis (0-100)
+- Detect banned words, URLs, suspicious emails
+- Classification: Pending / Approved / Rejected
+- Admin batch moderation dashboard
+
+### Payment
+
+- VNPay online payment integration
+- Automatic payment confirmation
+- Order status management
+
+### News & Promotions
+
+- News management
+- Promotional campaigns
+- Featured products
+
+### Customer Support
+
+- Live chat support
+- Chat history storage
+- New message notifications
+
+---
+
+## Directory Structure
 
 ```
+MVC/
 ├── app/                              # Core Framework
-│   ├── App.php                       # Bootstrap ứng dụng
-│   ├── config.php                    # Cấu hình toàn cục
-│   ├── DB.php                        # Kết nối database
+│   ├── App.php                       # Application bootstrap
+│   ├── config.php                    # Global configuration
+│   ├── DB.php                        # Database connection
 │   ├── Controller.php                # Base controller
-│   ├── ContentModerationService.php  # Dịch vụ kiểm duyệt
-│   ├── EmailService.php              # Dịch vụ email
-│   └── helpers.php                   # Hàm trợ giúp
+│   ├── ContentModerationService.php  # Content moderation
+│   ├── EmailService.php              # Email service
+│   └── helpers.php                   # Utility functions
 │
-├── controllers/                      # Điểm vào ứng dụng
-│   ├── Home.php                      # Trang chủ
-│   ├── AuthController.php            # Đăng nhập/đăng ký
-│   ├── Product.php                   # Sản phẩm
-│   ├── ReviewController.php          # Đánh giá & kiểm duyệt
-│   ├── CartController.php            # Giỏ hàng
-│   ├── OrderController.php           # Đơn hàng
-│   ├── VnpayReturnController.php     # Xử lý thanh toán
-│   ├── WishlistController.php        # Danh sách yêu thích
-│   ├── ChatboxController.php         # Chat
-│   ├── NewsController.php            # Tin tức
-│   ├── PromotionController.php       # Khuyến mãi
-│   ├── Admin.php                     # Dashboard Admin
-│   ├── AdminManagementController.php # Quản lý hệ thống
+├── controllers/                      # Request handlers
+│   ├── Home.php                      # Homepage
+│   ├── AuthController.php            # Login/Registration
+│   ├── Product.php                   # Products
+│   ├── ReviewController.php          # Reviews & moderation
+│   ├── OrderController.php           # Orders
+│   ├── CartController.php            # Shopping cart
+│   ├── Admin.php                     # Admin dashboard
+│   ├── VnpayReturnController.php     # Payment handler
 │   └── ...
 │
-├── models/                           # Xử lý dữ liệu
-│   ├── ReviewModel.php               # Quản lý đánh giá
-│   ├── OrderModel.php                # Quản lý đơn hàng
+├── models/                           # Database layer
+│   ├── ReviewModel.php
+│   ├── OrderModel.php
+│   ├── ProductModel.php
 │   └── ...
 │
-├── views/                            # Template HTML
-│   ├── review/                       # Views đánh giá
-│   ├── order/                        # Views đơn hàng
+├── views/                            # User interface
+│   ├── homePage.php
+│   ├── adminPage.php
 │   └── ...
 │
-├── middleware/                       # Xử lý trung gian
-│   └── PermissionMiddleware.php      # Kiểm tra quyền
+├── public/                           # Assets
+│   ├── css/                          # Stylesheets
+│   ├── js/                           # JavaScript
+│   └── images/                       # Images
 │
-├── migrations/                       # Schema database
-│   └── content_moderation_migration.sql
-│
-├── public/                           # Assets (CSS, JS, hình ảnh)
-│   ├── css/
-│   ├── js/
-│   └── images/
-│
-├── vnpay_php/                        # Thư viện VNPay
-│
-├── vendor/                           # Composer dependencies
-│
-├── index.php                         # Front controller
-├── composer.json                     # Quản lý dependencies
-├── .htaccess                         # Cấu hình Apache
-├── README.md                         # File này
-├── CONTENT_MODERATION_GUIDE.md       # Hướng dẫn kiểm duyệt
-├── README_MODERATION.md              # Quick start kiểm duyệt
-├── QUICKSTART.md                     # Hướng dẫn nhanh
-└── DEPLOYMENT_SUMMARY.md             # Tóm tắt triển khai
+├── vnpay_php/                        # VNPay Gateway
+├── vendor/                           # PHP libraries
+├── index.php                         # Entry point
+└── composer.json                     # Dependencies
 ```
 
 ---
 
-## ⚙️ Cài Đặt & Chạy
+## Installation & Setup
 
-### 1️⃣ Yêu Cầu Hệ Thống
+### 1. System Requirements
 
 - PHP 7.4+
 - MySQL 5.7+
-- Apache (với mod_rewrite)
+- Apache (with mod_rewrite)
 - Composer
 
-### 2️⃣ Cài Đặt
+### 2. Installation
 
 ```bash
-# Clone/tải dự án
+# Clone/download the project
 cd d:\xamcc\htdocs\phpnangcao\MVC
 
-# Cài dependencies
+# Install dependencies
 composer install
 
-# Tạo database
-# Nhập SQL từ folder migrations/
+# Create database
+# Import SQL from migrations/ folder
 ```
 
-### 3️⃣ Cấu Hình
+### 3. Configuration
 
-Sửa file `app/config.php`:
+Edit `app/config.php`:
 
 ```php
 define('DB_HOST', 'localhost');
@@ -161,7 +141,7 @@ define('DB_NAME', 'bookstore_db');
 define('BASE_URL', 'http://localhost/phpnangcao/MVC/');
 ```
 
-### 4️⃣ Chạy Ứng Dụng
+### 4. Run Application
 
 ```
 http://localhost/phpnangcao/MVC/
@@ -169,140 +149,134 @@ http://localhost/phpnangcao/MVC/
 
 ---
 
-## 🔐 Hệ Thống Kiểm Duyệt Nội Dung
+## Content Moderation System
 
-### Cách Hoạt Động
+### How It Works
 
-1. Khách hàng gửi đánh giá/nhận xét
-2. `ContentModerationService` phân tích tự động:
-   - Phát hiện spam, từ khóa cấm
-   - Tính toán điểm spam (0-100)
-   - Đề xuất trạng thái ban đầu
-3. Admin xem dashboard → duyệt/từ chối
-4. Nhận xét được phê duyệt → hiển thị trên trang sản phẩm
+1. Customer writes a review and submits
+2. System automatically analyzes:
+   - Detects spam and banned words
+   - Calculates spam score (0-100)
+   - Suggests approval/rejection
+3. Admin moderates on Dashboard
+4. Approved reviews display on product page
 
-### Các Trạng Thái
+### Review States
 
-| Trạng Thái | Ý Nghĩa               |
-| ---------- | --------------------- |
-| `pending`  | Đợi duyệt             |
-| `approved` | Đã phê duyệt          |
-| `rejected` | Bị từ chối            |
-| `spam`     | Được xác định là spam |
+|  Status  | Meaning         |
+| :------: | :-------------- |
+| pending  | Awaiting review |
+| approved | Approved        |
+| rejected | Rejected        |
+|   spam   | Spam/Abuse      |
 
-### Dashboard Admin
+### Admin Dashboard
 
-- URL: `/admin/reviews` (cần quyền Moderator)
-- Lọc theo trạng thái
-- Xem chi tiết + lý do
-- Duyệt hoặc từ chối
+- Access: `/admin/reviews`
+- Required role: Moderator or higher
+- Features: Filter, view details, batch moderation
 
-Chi tiết xem: [CONTENT_MODERATION_GUIDE.md](CONTENT_MODERATION_GUIDE.md)
-
----
-
-## 📋 Schema Database Chính
-
-### Bảng Reviews (Mở Rộng)
-
-```sql
-ALTER TABLE reviews ADD COLUMN (
-  moderation_status VARCHAR(20) DEFAULT 'pending',
-  spam_score DECIMAL(5,2) DEFAULT 0,
-  ly_do_tu_choi TEXT,
-  moderated_by INT,
-  moderation_date DATETIME,
-  moderation_notes TEXT
-);
-```
-
-### Các Bảng Khác
-
-- `users` - Người dùng
-- `products` - Sản phẩm
-- `orders` - Đơn hàng
-- `order_details` - Chi tiết đơn hàng
-- `reviews` - Đánh giá
-- `wishlist` - Danh sách yêu thích
-- `chatbox` - Tin nhắn
-- `news` - Tin tức
-- `promotions` - Khuyến mãi
-- Và nhiều bảng khác...
+Details: [CONTENT_MODERATION_GUIDE.md](CONTENT_MODERATION_GUIDE.md)
 
 ---
 
-## 🎯 Hướng Dẫn Nhanh
+## Technology Stack
 
-### Cho Admin
-
-1. Đăng nhập với tài khoản admin
-2. Vào `Admin Dashboard` → `Quản Lý Đánh Giá`
-3. Xem nhận xét chờ duyệt
-4. Click "Phê Duyệt" hoặc "Từ Chối"
-5. Nhập lý do (nếu từ chối)
-
-### Cho Khách Hàng
-
-1. Mua sản phẩm
-2. Viết đánh giá trên trang sản phẩm
-3. Nhận xét tự động được kiểm duyệt
-4. Xem nhận xét sau khi được phê duyệt
+|   Layer    | Technology    |
+| :--------: | :------------ |
+|  Backend   | PHP 7.4+ OOP  |
+|  Database  | MySQL/MariaDB |
+|  Frontend  | HTML, CSS, JS |
+| Framework  | Bootstrap 5   |
+|  Payment   | VNPay Gateway |
+|   Email    | PHPMailer     |
+| Versioning | Composer      |
 
 ---
 
-## 🔧 API Endpoints
+## Database - Main Tables
 
-### Đánh Giá
+### User Tables
 
-- `POST /reviews/add` - Thêm đánh giá
-- `GET /reviews/product/{id}` - Lấy đánh giá sản phẩm
-- `POST /reviews/moderate` - Duyệt/từ chối (Admin)
+| Table  | Description      |
+| :----- | :--------------- |
+| users  | Users, customers |
+| admins | Administrators   |
 
-### Giỏ Hàng
+### Sales Tables
 
-- `POST /cart/add` - Thêm sản phẩm
-- `POST /cart/remove` - Xóa sản phẩm
-- `GET /cart` - Xem giỏ hàng
+| Table          | Description     |
+| :------------- | :-------------- |
+| products       | Book catalog    |
+| product_types  | Book categories |
+| orders         | Orders          |
+| order_details  | Order items     |
+| shopping_carts | Shopping carts  |
 
-### Đơn Hàng
+### Supporting Tables
 
-- `POST /orders/create` - Tạo đơn hàng
-- `GET /orders` - Lịch sử đơn hàng
-- `GET /orders/{id}` - Chi tiết đơn hàng
-
-### Wishlist
-
-- `POST /wishlist/add` - Thêm yêu thích
-- `DELETE /wishlist/{id}` - Xóa yêu thích
-- `GET /wishlist` - Danh sách yêu thích
-
----
-
-## 📞 Support & Tài Liệu
-
-- 📖 [QUICKSTART.md](QUICKSTART.md) - Hướng dẫn nhanh 5 phút
-- 📋 [CONTENT_MODERATION_GUIDE.md](CONTENT_MODERATION_GUIDE.md) - Hướng dẫn kiểm duyệt chi tiết
-- 🚀 [DEPLOYMENT_SUMMARY.md](DEPLOYMENT_SUMMARY.md) - Tóm tắt triển khai
+| Table          | Description         |
+| :------------- | :------------------ |
+| reviews        | Reviews, moderation |
+| wishlist       | Favorites           |
+| news           | News articles       |
+| promotions     | Promotions          |
+| discount_codes | Discount codes      |
+| chatbox        | Chat support        |
 
 ---
 
-## 📝 Lịch Sử Phát Triển
+## Quick Start Guide
 
-### v1.0 (Hiện Tại)
+### For Admin
 
-- ✅ Hệ thống quản lý sách
-- ✅ Giỏ hàng & đơn hàng
-- ✅ Đánh giá & kiểm duyệt
-- ✅ Thanh toán VNPay
-- ✅ Chat trực tuyến
-- ✅ Quản lý người dùng & quyền
+1. Log in with admin account
+2. Go to Admin Dashboard
+3. Select Review Management
+4. View, filter, and moderate reviews
+5. Add rejection reason if needed
+
+### For Customers
+
+1. Create account
+2. Browse and purchase products
+3. Write product reviews
+4. Wait for approval
+5. View your approved reviews
 
 ---
 
-## 📄 License
+## Documentation
 
-Dự án này được phát triển cho mục đích học tập và sử dụng nội bộ.
+| File                                                       | Content               |
+| :--------------------------------------------------------- | :-------------------- |
+| [QUICKSTART.md](QUICKSTART.md)                             | 5-minute quick start  |
+| [CONTENT_MODERATION_GUIDE.md](CONTENT_MODERATION_GUIDE.md) | Moderation details    |
+| [DEPLOYMENT_SUMMARY.md](DEPLOYMENT_SUMMARY.md)             | Production deployment |
 
 ---
 
-**Cập nhật lần cuối**: 24 Tháng 12, 2025
+## Security
+
+- Password Hashing: bcrypt
+- SQL Injection Prevention: Prepared statements
+- CSRF Protection: Authentication tokens
+- Input Validation: Sanitize all inputs
+- Session Security: Secure session management
+
+---
+
+## Notes
+
+- Automatic moderation system helps prevent spam
+- VNPay payment requires API key configuration
+- Admins have full system control
+- Regular database backups recommended
+
+---
+
+## License
+
+This project is developed for educational purposes.
+
+**Last Updated**: December 25, 2025
